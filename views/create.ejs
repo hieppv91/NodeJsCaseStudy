@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Clean Blog - Start Bootstrap Theme</title>
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <title>Lovely And Safe</title>
+        <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -24,28 +24,36 @@
         <div class="container">
             <div class="row">
             <div class="col-lg-8 col-md-10 mx-auto">        
-                <form action="/post/new" method="POST">
+                <form method="post">
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
-                    <label>Title</label>
-                    <input type="text" class="form-control" placeholder="Title" id="title" name="title">              
+                    <label>Title</label>                    
+                    <% if (typeof detailPost == 'object') { %>                        
+                        <input type="text" style="visibility: hidden;" class="form-control" placeholder="Title" id="title" name="idPost" value="<%= detailPost.id %>">   
+                        <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="<%= detailPost.title %>">     
+                    <% } else {%>       
+                        <input type="text" class="form-control" placeholder="Title" id="title" name="title" value="">     
+                    <% } %>      
                     </div>
                 </div>   
                 <div class="control-group">
                     <div class="form-group floating-label-form-group controls">
                     <label>Content</label>
-                    <textarea rows="5" class="form-control" placeholder="Content" id="body" name="body"></textarea>              
+                    <textarea rows="5" class="form-control" placeholder="Content" id="body" name="body"><% if (typeof detailPost == 'object') { %><%= detailPost.body %><%}%></textarea>
                     </div>
                 </div>  
                 <br>                    
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary" id="sendMessageButton">Send</button>
+                    <% if (typeof detailPost == 'object') { %>
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" formaction="/post/update">Update</button>
+                    <% } else {%>                    
+                        <button type="submit" class="btn btn-primary" id="sendMessageButton" formaction="/post/new">Create</button>    
+                    <% } %>
                 </div>
                 </form>
             </div>
             </div>
         </div>
-
   <hr>
         <!-- Footer-->
        <%- include('./layout/footer'); -%>
